@@ -1,0 +1,200 @@
+## E1 - instante mici (10 clienti) vs optimul exact
+metoda  makespan_mediu  gap_mediu_pct  gap_max_pct  optim_gasit  misiuni_medii  timp_mediu_s
+   TSP         187.455         40.107       76.481            0          0.000         0.000
+GREEDY         164.721         21.208       53.256            0          2.833         0.000
+ SPLIT         161.357         18.144       53.256            0          2.733         0.000
+   ILS         136.949          0.473        2.545           20          3.967         0.145
+ EXACT         136.277          0.000        0.000           30          4.067       197.860
+
+## E2 - plan factorial (economie makespan % vs TSP, medie ± sd pe 30 seed-uri)
+ alpha  SL_SR  baterie_Wh       GREEDY        SPLIT          ILS  misiuni_ILS  timp_ILS_s
+   1.2    1.0       200.0  8.34 ± 0.99 11.07 ± 1.17 15.06 ± 1.57    45.066667  136.168170
+   1.2    1.0       300.0 10.56 ± 1.27 15.40 ± 1.49 20.75 ± 2.09    52.433333  158.355297
+   1.2    2.0       200.0  5.90 ± 0.81  7.72 ± 1.15 10.56 ± 1.27    35.000000  246.153039
+   1.2    2.0       300.0  8.93 ± 0.97 12.34 ± 1.50 16.24 ± 1.87    43.133333  125.620285
+   1.6    1.0       200.0 10.74 ± 1.49 13.45 ± 1.62 18.85 ± 2.25    52.066667  116.250352
+   1.6    1.0       300.0 12.66 ± 1.81 16.16 ± 1.84 22.51 ± 2.45    57.733333  101.358013
+   1.6    2.0       200.0  9.02 ± 1.31 10.24 ± 1.50 14.57 ± 2.06    41.100000  125.911730
+   1.6    2.0       300.0 11.14 ± 1.53 13.15 ± 1.72 18.23 ± 2.13    47.100000  107.773307
+   2.0    1.0       200.0 11.57 ± 1.67 14.21 ± 1.60 21.09 ± 2.48    55.300000  101.021847
+   2.0    1.0       300.0 13.67 ± 2.04 16.69 ± 2.10 23.08 ± 2.20    59.533333   90.993659
+   2.0    2.0       200.0 10.22 ± 1.42 11.18 ± 1.51 16.32 ± 2.35    44.666667  113.334990
+   2.0    2.0       300.0 11.88 ± 1.62 13.30 ± 1.71 18.63 ± 2.31    48.600000   94.740120
+
+Economie globala:
+         mean   std   min    max
+metoda                          
+TSP      0.00  0.00  0.00   0.00
+GREEDY  10.39  2.47  4.50  18.28
+SPLIT   12.91  2.94  5.60  21.12
+ILS     17.99  4.07  7.97  27.96
+
+Friedman chi2=1080.0, p=7.94e-234; ranguri medii: TSP=4.00, GREEDY=3.00, SPLIT=2.00, ILS=1.00
+    comparatie   N  castiga       p_Holm  efect_r
+  GREEDY < TSP 360      360 1.410537e-60 0.866626
+SPLIT < GREEDY 360      360 1.410537e-60 0.866626
+   ILS < SPLIT 360      360 1.410537e-60 0.866626
+
+    factor  nivel  economie_ILS_medie_pct  misiuni_ILS_medii
+     alpha    1.2                   15.66              43.91
+     alpha    1.6                   18.54              49.50
+     alpha    2.0                   19.78              52.02
+     SL_SR    1.0                   20.22              53.69
+     SL_SR    2.0                   15.76              43.27
+baterie_Wh  200.0                   16.08              45.53
+baterie_Wh  300.0                   19.91              51.42
+
+## E3 - ablation model energetic (evaluat cu modelul complet)
+            varianta metoda  makespan_planificat  misiuni  misiuni_nefezabile_medii  pct_solutii_nefezabile  subestimare_energie_pct
+             COMPLET GREEDY              2209.40    41.23                      0.00                    0.00                     0.00
+             COMPLET    ILS              1964.44    56.47                      0.00                    0.00                     0.00
+             COMPLET  SPLIT              2123.22    40.57                      0.00                    0.00                     0.00
+CONSTANTA_FARA_HOVER GREEDY              2160.24    43.93                      3.43                  100.00                    45.71
+CONSTANTA_FARA_HOVER    ILS              1930.95    58.70                     16.30                  100.00                    38.29
+CONSTANTA_FARA_HOVER  SPLIT              2070.03    42.97                      9.70                  100.00                    51.20
+   ENERGIE_CONSTANTA GREEDY              2178.92    42.50                      1.43                   90.00                    11.11
+   ENERGIE_CONSTANTA    ILS              1943.99    57.33                      8.77                  100.00                    13.46
+   ENERGIE_CONSTANTA  SPLIT              2091.81    41.53                      3.50                   96.67                    11.03
+          FARA_HOVER GREEDY              2182.22    43.50                      3.00                  100.00                    35.45
+          FARA_HOVER    ILS              1931.11    58.77                     14.53                  100.00                    28.31
+          FARA_HOVER  SPLIT              2085.45    42.60                      9.20                  100.00                    42.49
+
+## E4 - Pareto makespan vs CO2
+ lambda_timp metoda  makespan_min  co2_kg  cost_eur  km_camion  nr_misiuni  energie_Wh  nedominat
+         0.0  SPLIT       2122.57  414.87    950.34    1650.82          57     8307.63       True
+         0.0    ILS       2123.02  377.36    915.23    1497.43          77    11558.42      False
+         0.1  SPLIT       2097.19  414.97    942.93    1651.93          52     7652.40       True
+         0.1    ILS       2015.80  376.39    891.10    1493.34          74    11758.15       True
+         0.2  SPLIT       2097.19  414.97    942.93    1651.93          52     7652.40      False
+         0.2    ILS       1984.00  383.13    889.89    1521.27          68    10834.14      False
+         0.3  SPLIT       2095.84  415.08    942.29    1652.47          51     7532.02       True
+         0.3    ILS       1963.71  378.42    879.21    1502.89          66    10389.14      False
+         0.4  SPLIT       2094.66  415.20    941.72    1653.16          50     7358.32       True
+         0.4    ILS       1959.09  378.34    877.18    1502.66          64    10274.12       True
+         0.5  SPLIT       2093.64  415.37    941.22    1653.97          49     7214.60       True
+         0.5    ILS       1983.86  386.15    891.04    1534.24          63     9968.59      False
+         0.6  SPLIT       2093.54  415.39    941.22    1653.97          49     7303.40       True
+         0.6    ILS       2000.03  392.35    899.26    1559.83          58     9223.26      False
+         0.7  SPLIT       2092.97  415.66    940.94    1655.16          48     7210.64       True
+         0.7    ILS       1990.38  389.83    894.80    1549.60          59     9367.55      False
+         0.8  SPLIT       2092.97  415.66    940.94    1655.16          48     7210.64      False
+         0.8    ILS       1990.38  389.83    894.80    1549.60          59     9367.55      False
+         0.9  SPLIT       2092.77  416.01    940.83    1656.66          47     7096.15       True
+         0.9    ILS       1991.81  392.62    898.41    1560.48          59     9617.04      False
+         1.0  SPLIT       2092.77  416.06    940.87    1656.66          47     7284.62      False
+         1.0    ILS       2001.31  393.69    901.53    1563.83          59    10496.64      False
+
+## E5 - sensibilitate (economie % vs TSP, medie pe 10 seed-uri)
+ parametru  valoare metoda  economie_pct  misiuni
+  Q_max_kg      1.0    ILS          7.35     21.0
+  Q_max_kg      1.0  SPLIT          6.09     16.9
+  Q_max_kg      2.0    ILS         14.09     40.1
+  Q_max_kg      2.0  SPLIT         10.31     29.0
+  Q_max_kg      3.0    ILS         20.97     55.7
+  Q_max_kg      3.0  SPLIT         14.53     39.3
+  Q_max_kg      4.0    ILS         26.63     62.5
+  Q_max_kg      4.0  SPLIT         18.40     47.4
+  Q_max_kg      5.0    ILS         30.51     66.0
+  Q_max_kg      5.0  SPLIT         22.02     52.9
+    SL_min      0.0    ILS         26.11     69.2
+    SL_min      0.0  SPLIT         18.73     56.8
+    SL_min      0.5    ILS         23.39     61.3
+    SL_min      0.5  SPLIT         16.46     46.0
+    SL_min      1.0    ILS         20.97     55.7
+    SL_min      1.0  SPLIT         14.53     39.3
+    SL_min      2.0    ILS         16.63     44.1
+    SL_min      2.0  SPLIT         11.19     30.4
+    SL_min      3.0    ILS         12.42     35.1
+    SL_min      3.0  SPLIT          8.45     25.0
+     alpha      1.0    ILS         15.46     43.5
+     alpha      1.0  SPLIT         12.13     36.2
+     alpha      1.2    ILS         18.56     50.1
+     alpha      1.2  SPLIT         13.47     38.2
+     alpha      1.6    ILS         20.97     55.7
+     alpha      1.6  SPLIT         14.53     39.3
+     alpha      2.0    ILS         22.21     58.6
+     alpha      2.0  SPLIT         14.88     39.9
+     alpha      2.4    ILS         22.74     60.6
+     alpha      2.4  SPLIT         14.91     39.9
+baterie_Wh    100.0    ILS          4.10     16.1
+baterie_Wh    100.0  SPLIT          1.42      4.5
+baterie_Wh    150.0    ILS         13.32     42.0
+baterie_Wh    150.0  SPLIT          9.24     26.3
+baterie_Wh    200.0    ILS         18.44     52.6
+baterie_Wh    200.0  SPLIT         12.55     34.2
+baterie_Wh    250.0    ILS         20.97     55.7
+baterie_Wh    250.0  SPLIT         14.53     39.3
+baterie_Wh    300.0    ILS         21.61     56.7
+baterie_Wh    300.0  SPLIT         15.52     40.6
+baterie_Wh    400.0    ILS         22.47     57.0
+baterie_Wh    400.0  SPLIT         16.74     42.0
+
+## E6 - benchmark DMN (setarea 4), abatere fata de optimul publicat
+benchmark  endurance metoda  instante  gap_mediu_pct  gap_max_pct  optim_gasit  timp_mediu_s
+   DMN-B1         20    TSP        36        14.6071      47.4339            8        0.0000
+   DMN-B1         20 GREEDY        36        10.3457      28.8983            8        0.0000
+   DMN-B1         20  SPLIT        36         4.4008      19.2385           14        0.0002
+   DMN-B1         20    ILS        36        -0.0000       0.0000           36        1.0001
+   DMN-B1         20    HGA        36        -0.0000       0.0000           36        1.0142
+   DMN-B1         20    VNS        36        -0.0000       0.0000           36        1.0001
+   DMN-B1         20  EXACT        36        -0.0000       0.0000           36      188.4430
+   DMN-B1         40    TSP        36        20.1622      47.4339            2        0.0000
+   DMN-B1         40 GREEDY        36        15.7020      31.7143            2        0.0000
+   DMN-B1         40  SPLIT        36         4.6057      20.2357           13        0.0002
+   DMN-B1         40    ILS        36         0.0000       0.0000           36        1.0001
+   DMN-B1         40    HGA        36         0.0000       0.0000           36        1.0350
+   DMN-B1         40    VNS        36         0.0000       0.0000           36        1.0001
+   DMN-B1         40  EXACT        36         0.0000       0.0000           36      324.7195
+   DMN-B2         20    TSP       100        12.2707      72.8599            2        0.0000
+   DMN-B2         20 GREEDY       100         6.3016      28.7306           16        0.0000
+   DMN-B2         20  SPLIT       100         6.0606      28.7306           17        0.0001
+   DMN-B2         20    ILS       100         0.0229       2.2913           99        1.0001
+   DMN-B2         20    HGA       100         0.0000       0.0000          100        1.0226
+   DMN-B2         20    VNS       100         0.0000       0.0000          100        1.0001
+   DMN-B2         20  EXACT       100         0.0000       0.0000          100       11.6110
+   DMN-B2         40    TSP       100        54.1199      94.9085            0        0.0000
+   DMN-B2         40 GREEDY       100        30.2185      87.3240            0        0.0000
+   DMN-B2         40  SPLIT       100        27.6647      83.6980            0        0.0002
+   DMN-B2         40    ILS       100         0.0222       2.0084           97        1.0001
+   DMN-B2         40    HGA       100         0.0124       1.0070           97        1.0251
+   DMN-B2         40    VNS       100         0.0058       0.5691           98        1.0001
+   DMN-B2         40  EXACT       100        -0.0000       0.0000          100       14.5987
+
+## E7 - ILS / HGA / VNS la acelasi buget de timp (economie % vs TSP)
+ buget_s metoda  N  economie_medie_pct  economie_sd  rang_mediu  cel_mai_bun  friedman_chi2  friedman_p
+    60.0    ILS 60             17.5788       3.5601      1.1667           50       103.3333         0.0
+    60.0    HGA 60             13.3785       3.0142      3.0000            0       103.3333         0.0
+    60.0    VNS 60             16.5753       3.7058      1.8333           10       103.3333         0.0
+   180.0    ILS 60             17.8941       3.4716      1.1500           51       104.7000         0.0
+   180.0    HGA 60             14.0216       3.2497      3.0000            0       104.7000         0.0
+   180.0    VNS 60             16.7455       3.6722      1.8500            9       104.7000         0.0
+
+ buget_s comparatie  N  castiga       p_Holm  efect_r
+    60.0  ILS < HGA 60       60 2.444334e-11 0.869597
+    60.0  ILS < VNS 60       50 8.194525e-09 0.728941
+    60.0  VNS < HGA 60       60 2.444334e-11 0.869597
+   180.0  ILS < HGA 60       60 2.444334e-11 0.869597
+   180.0  ILS < VNS 60       51 1.239012e-09 0.769807
+   180.0  VNS < HGA 60       60 2.444334e-11 0.869597
+
+## E8 - robustete la puterea din lansare/recuperare
+ factor        metoda  economie_pct  misiuni  pct_solutii_nefezabile  misiuni_nefezabile
+   1.00           ILS         20.97     55.7                     0.0                 0.0
+   1.00   ILS_plan_f1         20.97     55.7                     0.0                 0.0
+   1.00         SPLIT         14.53     39.3                     0.0                 0.0
+   1.00 SPLIT_plan_f1         14.53     39.3                     0.0                 0.0
+   1.25           ILS         20.82     55.2                     0.0                 0.0
+   1.25   ILS_plan_f1         20.97     55.7                    70.0                 1.0
+   1.25         SPLIT         14.36     38.9                     0.0                 0.0
+   1.25 SPLIT_plan_f1         14.53     39.3                    60.0                 0.6
+   1.50           ILS         20.62     55.0                     0.0                 0.0
+   1.50   ILS_plan_f1         20.97     55.7                   100.0                 2.2
+   1.50         SPLIT         14.22     38.8                     0.0                 0.0
+   1.50 SPLIT_plan_f1         14.53     39.3                    70.0                 1.1
+   2.00           ILS         19.92     54.3                     0.0                 0.0
+   2.00   ILS_plan_f1         20.97     55.7                   100.0                 5.8
+   2.00         SPLIT         13.87     38.1                     0.0                 0.0
+   2.00 SPLIT_plan_f1         14.53     39.3                   100.0                 1.9
+
+## Harta studiului de caz (seed 42, scenariu de baza, ILS)
+Indicatori(makespan_min=2001.3053943854604, km_camion=1563.8290000000004, km_drona=np.float64(1242.3997744142794), energie_Wh=10426.462954537506, nr_misiuni=59, cost_eur=901.5163946157264, co2_kg=393.66813036817985, fezabila=True, misiuni_nefezabile=0)
